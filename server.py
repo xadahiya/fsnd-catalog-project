@@ -284,22 +284,24 @@ def deleteItem(category, item):
 
 @app.route('/category/JSON')
 def jsonData():
-    ''' Return JSON for all categories'''
+    '''Return JSON for all categories'''
     categories = session.query(Category).all()
-    return jsonify(categories= [c.serialize for c in categories])
+    return jsonify(categories=[c.serialize for c in categories])
+
 
 @app.route('/category/<string:category>/JSON')
 def categoryItemData(category):
-    """Return JSON of all the items for a category"""
+    '''Return JSON of all the items for a category'''
     cat_id = session.query(Category).filter_by(name=category).one().id
     items = session.query(Item).filter_by(category_id=cat_id).all()
     return jsonify(Items=[i.serialize for i in items])
 
+
 @app.route('/category/<string:category>/<string:item>/JSON')
 def itemJSON(category, item):
-    """Return JSON for an item"""
+    '''Return JSON for an item'''
     cat_id = session.query(Category).filter_by(name=category).one().id
-    item = session.query(Item).filter_by(name = item, category_id = cat_id).one()
+    item = session.query(Item).filter_by(name=item, category_id=cat_id).one()
     return jsonify(item=item.serialize)
 
 
