@@ -1,0 +1,19 @@
+body{
+  background-color:aliceblue;
+}
+
+.navbar{
+  background-color:bisque
+}
+.navbar-data{
+  padding:5px;
+  font-size: 25px;
+}
+
+.content-block{
+  background-color:#fff;
+}
+
+.category-block{
+  border-right: grey solid 1px
+}

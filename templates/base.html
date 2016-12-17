@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    {% block extra_head%}{% endblock %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='bootstrap-theme.min.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row navbar">
+        <div class="col-md-12">
+          <div class="pull-left navbar-data">Catalog</div>
+          <div class="text-right navbar-data">
+            {% if login %}
+            <a class="primary text-right" href="/gdisconnect">Logout</a>
+            {% else %}
+            <a class="primary text-right" href="/login">Login</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <hr>
+      <br>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1 content-block">
+          {% block content %}{% endblock %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

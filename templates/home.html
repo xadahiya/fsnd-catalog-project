@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Catalog Home!{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-4 category-block">
+    <h2>Categories</h2>
+    {% if login %}
+    <p>
+      <a href="{{url_for('newCategory')}}">Add new Category</a>
+    </p>
+    {% endif %}
+    {% for category in categories %}
+      <a href="{{url_for('categoryView', category = category.name)}}"><h4>{{category.name}}</h4></a>
+    {% endfor %}
+  </div>
+  <div class="col-md-8 items-block">
+    <h2>Latest Items</h2>
+    {% if login %}
+    <p>
+      <a href="{{url_for('newItem')}}">Add new Item</a>
+    </p>
+    {% endif %}
+    {% for item in recent_items %}
+    <a href="{{url_for('itemView', category = item.category.name, item = item.name)}}"><h4>{{item.name}}</a> <span class="text-warning">({{item.category.name}})</span></h4>
+    {% endfor %}
+</div>
+</div>
+{% endblock %}
