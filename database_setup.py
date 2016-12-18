@@ -9,6 +9,8 @@ from sqlalchemy import create_engine
 Base = declarative_base()
 
 
+
+
 class Category(Base):
     __tablename__ = 'category'
 
@@ -47,7 +49,7 @@ class Item(Base):
         }
 
 
-engine = create_engine('sqlite:///catalog.db')
+engine = create_engine('postgresql://catalog:password@localhost:5432/catalog')
 
 
 Base.metadata.create_all(engine)
