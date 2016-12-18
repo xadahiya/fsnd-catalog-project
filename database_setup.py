@@ -31,6 +31,7 @@ class Item(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(80), nullable=False)
+    author = Column(String(80), nullable=False)
     description = Column(String(500))
     date_added = Column(DateTime, default = datetime.datetime.utcnow)
     category_id = Column(Integer, ForeignKey('category.id'))

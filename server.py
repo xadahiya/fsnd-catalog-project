@@ -203,7 +203,7 @@ def newItem():
             category = request.form['category']
             print category
             newItem = Item(name=name, description=description,
-                           category_id=int(category))
+                           author=login_session['username'], category_id=int(category))
             session.add(newItem)
             session.commit()
             return redirect(url_for('Home'))
@@ -249,7 +249,7 @@ def editItem(category, item):
         cat_id = session.query(Category).filter_by(name=category).one().id
         edit_item = session.query(Item).filter_by(
             category_id=cat_id, name=item).one()
-        if request.method == 'POST':
+        if request.method == 'POST' and edit_item.author == login_session['username']:
             name = request.form['name']
             description = request.form['description']
             category = request.form['category']
@@ -259,10 +259,12 @@ def editItem(category, item):
             edit_item.category_id = int(category)
             session.commit()
             return redirect(url_for('Home'))
-        else:
+        elif edit_item.author == login_session['username']:
             categories = session.query(Category).all()
             return render_template('edit_item.html', item=edit_item,
                                    categories=categories)
+        else:
+            return "You are not the author!"
 
 
 @app.route('/catalog/<string:category>/<string:item>/delete',
@@ -272,14 +274,18 @@ def deleteItem(category, item):
     if 'username' not in login_session:
         return redirect('/login')
     else:
-        if request.method == 'POST':
-            cat_id = session.query(Category).filter_by(name=category).one().id
-            item_del = session.query(Item).filer_by(
+        cat_id = session.query(Category).filter_by(name=category).one().id
+        item_del = session.query(Item).filter_by(
+            name=item, category_id=cat_id).one()
+        if request.method == 'POST' and item_del.author == login_session['username']:
+            item_del = session.query(Item).filter_by(
                 name=item, category_id=cat_id).delete()
             return redirect(url_for('Home'))
 
-        else:
+        elif item_del.author == login_session['username']:
             return render_template('delete.html', category=category, item=item)
+        else:
+            return "You are not the author!"
 
 
 @app.route('/category/JSON')
