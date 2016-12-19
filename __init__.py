@@ -16,7 +16,7 @@ from flask import make_response
 import requests
 app = Flask(__name__)
 
-CLIENT_PATH = os.path.join(os.path.dirname(__file__), 'client_secretes.json')
+CLIENT_PATH = os.path.join(os.path.dirname(__file__), 'client_secrets.json')
 CLIENT_ID = json.loads(
     open(CLIENT_PATH, 'r').read())['web']['client_id']
 APPLICATION_NAME = "Catalog app"
