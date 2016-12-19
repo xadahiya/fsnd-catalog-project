@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect
 from flask import url_for, jsonify, flash
 from flask import session as login_session
 import random
+import os
 import string
 from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import sessionmaker
@@ -15,8 +16,9 @@ from flask import make_response
 import requests
 app = Flask(__name__)
 
+CLIENT_PATH = os.path.join(os.path.dirname(__file__), 'client_secretes.json')
 CLIENT_ID = json.loads(
-    open('client_secrets.json', 'r').read())['web']['client_id']
+    open(CLIENT_PATH, 'r').read())['web']['client_id']
 APPLICATION_NAME = "Catalog app"
 
 engine = create_engine('postgresql://catalog:password@localhost:5432/catalog')
